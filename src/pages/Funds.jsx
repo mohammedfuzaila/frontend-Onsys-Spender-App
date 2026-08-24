@@ -6,6 +6,7 @@ import {
   AlertCircle, Trash2, ArrowDownToLine, Edit2
 } from 'lucide-react';
 import { format } from 'date-fns';
+import BottomSheet from '../components/BottomSheet';
 
 const Funds = () => {
   const [funds, setFunds] = useState([]);
@@ -204,86 +205,92 @@ const Funds = () => {
         )}
       </div>
 
-      {/* Add/Edit Fund Modal / Bottom Sheet */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
-          <div className="bg-[#12151C] border border-[#232B3A] rounded-t-3xl sm:rounded-3xl shadow-2xl w-full max-w-md overflow-hidden bottom-sheet">
-            <div className="w-12 h-1 bg-slate-700 rounded-full mx-auto mt-3 sm:hidden"></div>
-
-            <div className="px-6 py-4 border-b border-[#1E2532] flex justify-between items-center">
-              <h2 className="text-base font-bold text-white">{isEditMode ? 'Edit Fund Entry' : 'Add Funds Received'}</h2>
-              <button onClick={handleCloseModal} className="text-slate-400 hover:text-white text-2xl leading-none">&times;</button>
-            </div>
-            <div className="p-5 sm:p-6">
-              {error && (
-                <div className="mb-4 p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl flex gap-2.5 text-rose-400 text-xs">
-                  <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                  <p>{error}</p>
-                </div>
-              )}
-              <form id="fund-form" onSubmit={handleSubmit} className="space-y-3.5">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Amount (₹)</label>
-                  <div className="relative">
-                    <IndianRupee className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-amber-400" />
-                    <input 
-                      type="number" 
-                      step="0.01" 
-                      min="0.01" 
-                      required 
-                      value={formData.amount} 
-                      onChange={handleInputChange}
-                      className="w-full pl-9 pr-3.5 py-2.5 bg-[#171C26] border border-[#262D3B] rounded-xl focus:ring-2 focus:ring-amber-500 outline-none text-white text-base font-bold"
-                      placeholder="5000.00"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Source / Company</label>
-                  <input 
-                    type="text" 
-                    name="source" 
-                    required 
-                    value={formData.source} 
-                    onChange={handleInputChange}
-                    className="w-full px-3.5 py-2.5 bg-[#171C26] border border-[#262D3B] rounded-xl focus:ring-2 focus:ring-amber-500 outline-none text-white text-xs sm:text-sm"
-                    placeholder="OnSys Infotech"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Date</label>
-                  <input 
-                    type="date" 
-                    name="date" 
-                    required 
-                    value={formData.date} 
-                    onChange={handleInputChange}
-                    className="w-full px-3.5 py-2.5 bg-[#171C26] border border-[#262D3B] rounded-xl focus:ring-2 focus:ring-amber-500 outline-none text-white text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Note (Optional)</label>
-                  <textarea 
-                    name="note" 
-                    rows="2" 
-                    value={formData.note} 
-                    onChange={handleInputChange}
-                    className="w-full px-3.5 py-2 bg-[#171C26] border border-[#262D3B] rounded-xl focus:ring-2 focus:ring-amber-500 outline-none text-white resize-none text-xs"
-                    placeholder="e.g. Monthly daily expenses allowance"
-                  ></textarea>
-                </div>
-              </form>
-            </div>
-            <div className="px-6 py-4 border-t border-[#1E2532] bg-[#0E1117] flex justify-end space-x-2.5">
-              <button type="button" onClick={handleCloseModal} className="px-4 py-2.5 text-slate-400 text-xs font-semibold hover:bg-[#1A202C] rounded-xl">Cancel</button>
-              <button type="submit" form="fund-form" disabled={saving}
-                className="px-5 py-2.5 bg-emerald-600 text-white text-xs font-bold rounded-xl hover:bg-emerald-700 flex items-center min-w-[110px] justify-center shadow-sm">
-                {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : (isEditMode ? 'Save Changes' : 'Record Funds')}
-              </button>
+      {/* Add/Edit Fund Bottom Sheet */}
+      <BottomSheet
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        title={isEditMode ? 'Edit Fund Entry' : 'Add Funds Received'}
+        maxWidth="max-w-md"
+        footer={
+          <>
+            <button
+              type="button"
+              onClick={handleCloseModal}
+              className="px-4 py-2.5 text-slate-400 text-xs font-semibold hover:bg-[#1A202C] rounded-xl transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              form="fund-form"
+              disabled={saving}
+              className="px-5 py-2.5 bg-emerald-600 text-white text-xs font-bold rounded-xl hover:bg-emerald-700 flex items-center min-w-[120px] justify-center shadow-sm active:scale-95 transition-all"
+            >
+              {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : (isEditMode ? 'Save Changes' : 'Record Funds')}
+            </button>
+          </>
+        }
+      >
+        {error && (
+          <div className="mb-1 p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl flex gap-2.5 text-rose-400 text-xs">
+            <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+            <p>{error}</p>
+          </div>
+        )}
+        <form id="fund-form" onSubmit={handleSubmit} className="space-y-3.5 pt-1">
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1.5">Amount (₹)</label>
+            <div className="relative">
+              <IndianRupee className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-amber-400" />
+              <input
+                type="number"
+                name="amount"
+                step="0.01"
+                min="0.01"
+                required
+                value={formData.amount}
+                onChange={handleInputChange}
+                className="w-full pl-9 pr-3.5 py-3 bg-[#171C26] border border-[#262D3B] rounded-xl focus:ring-2 focus:ring-amber-500 outline-none text-white text-base font-bold"
+                placeholder="5000.00"
+              />
             </div>
           </div>
-        </div>
-      )}
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1.5">Source / Company</label>
+            <input
+              type="text"
+              name="source"
+              required
+              value={formData.source}
+              onChange={handleInputChange}
+              className="w-full px-3.5 py-3 bg-[#171C26] border border-[#262D3B] rounded-xl focus:ring-2 focus:ring-amber-500 outline-none text-white text-sm"
+              placeholder="OnSys Infotech"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1.5">Date</label>
+            <input
+              type="date"
+              name="date"
+              required
+              value={formData.date}
+              onChange={handleInputChange}
+              className="w-full px-3.5 py-3 bg-[#171C26] border border-[#262D3B] rounded-xl focus:ring-2 focus:ring-amber-500 outline-none text-white text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1.5">Note (Optional)</label>
+            <textarea
+              name="note"
+              rows="2"
+              value={formData.note}
+              onChange={handleInputChange}
+              className="w-full px-3.5 py-2.5 bg-[#171C26] border border-[#262D3B] rounded-xl focus:ring-2 focus:ring-amber-500 outline-none text-white resize-none text-sm"
+              placeholder="e.g. Monthly daily expenses allowance"
+            />
+          </div>
+        </form>
+      </BottomSheet>
 
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
