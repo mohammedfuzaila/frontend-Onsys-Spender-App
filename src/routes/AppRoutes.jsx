@@ -44,8 +44,8 @@ const AppRoutes = () => {
           <Route path="settings" element={<Settings />} />
         </Route>
         
-        {/* Catch all */}
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        {/* Catch all - redirect to login for unauthenticated, dashboard for authenticated */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Suspense>
   );

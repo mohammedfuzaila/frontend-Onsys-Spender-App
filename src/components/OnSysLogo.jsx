@@ -1,10 +1,11 @@
 import React from 'react';
 
-/**
- * OnSysIcon — Round dark badge with a glowing purple lightning bolt.
- * Used anywhere a compact square/round app icon is needed.
- */
-export const OnSysIcon = ({ className = "w-8 h-8" }) => (
+// ─────────────────────────────────────────────────────────────────────────────
+// OnSysSpenderIcon
+// Matches the Onsys Infotech brand: split silver/gold circle ring with
+// a gold "S" letterform inside, on a dark background.
+// ─────────────────────────────────────────────────────────────────────────────
+export const OnSysSpenderIcon = ({ className = 'w-16 h-16' }) => (
   <svg
     viewBox="0 0 200 200"
     fill="none"
@@ -12,103 +13,196 @@ export const OnSysIcon = ({ className = "w-8 h-8" }) => (
     className={className}
   >
     <defs>
-      <linearGradient id="oi-bg" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stopColor="#0F0A1E" />
-        <stop offset="100%" stopColor="#160B2E" />
-      </linearGradient>
-      <linearGradient id="oi-bolt" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stopColor="#C77DFF" />
-        <stop offset="40%" stopColor="#9B5DE5" />
-        <stop offset="100%" stopColor="#5A0FA0" />
-      </linearGradient>
-      <linearGradient id="oi-gloss" x1="40" y1="20" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.35" />
-        <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
-      </linearGradient>
-      <radialGradient id="oi-glow" cx="50%" cy="45%" r="40%">
-        <stop offset="0%" stopColor="#7B2FFF" stopOpacity="0.45" />
-        <stop offset="100%" stopColor="#7B2FFF" stopOpacity="0" />
+      <radialGradient id="si-bg" cx="50%" cy="35%" r="65%">
+        <stop offset="0%" stopColor="#1C1C22" />
+        <stop offset="100%" stopColor="#0D0D0F" />
       </radialGradient>
-      <filter id="oi-blur" x="-30%" y="-30%" width="160%" height="160%" colorInterpolationFilters="sRGB">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
-        <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-      </filter>
-      <clipPath id="oi-clip"><circle cx="100" cy="100" r="96" /></clipPath>
-    </defs>
-
-    {/* Background */}
-    <circle cx="100" cy="100" r="98" fill="url(#oi-bg)" stroke="#3A1570" strokeWidth="1.5" />
-
-    {/* Ambient glow behind bolt */}
-    <circle cx="100" cy="88" r="55" fill="url(#oi-glow)" clipPath="url(#oi-clip)" />
-
-    {/* Lightning bolt with glow */}
-    <g filter="url(#oi-blur)" clipPath="url(#oi-clip)">
-      <path d="M113 22 L60 98 L90 98 L87 178 L140 102 L110 102 Z" fill="url(#oi-bolt)" />
-      <path d="M113 22 L60 98 L90 98 L87 178 L140 102 L110 102 Z" fill="url(#oi-gloss)" />
-    </g>
-  </svg>
-);
-
-/**
- * SpenderWordmark — The big bold "Spender" text used as the primary brand element.
- * Features a purple gradient across the letters with a subtle glow.
- */
-export const SpenderWordmark = ({ className = "" }) => (
-  <svg
-    viewBox="0 0 320 60"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <defs>
-      <linearGradient id="sw-text-grad" x1="0" y1="0" x2="320" y2="60" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stopColor="#D4A0FF" />
-        <stop offset="50%" stopColor="#9B5DE5" />
-        <stop offset="100%" stopColor="#6A1BE0" />
+      <linearGradient id="si-silver" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%"  stopColor="#FFFFFF" />
+        <stop offset="30%" stopColor="#D4D8E2" />
+        <stop offset="60%" stopColor="#9BA3B2" />
+        <stop offset="100%" stopColor="#6B7280" />
       </linearGradient>
-      <filter id="sw-glow" x="-5%" y="-20%" width="110%" height="140%">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
-        <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+      <linearGradient id="si-gold" x1="1" y1="0" x2="0" y2="1">
+        <stop offset="0%"  stopColor="#FDE68A" />
+        <stop offset="35%" stopColor="#F59E0B" />
+        <stop offset="70%" stopColor="#D97706" />
+        <stop offset="100%" stopColor="#92400E" />
+      </linearGradient>
+      <linearGradient id="si-letter" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"  stopColor="#FDE68A" />
+        <stop offset="50%" stopColor="#F59E0B" />
+        <stop offset="100%" stopColor="#D97706" />
+      </linearGradient>
+      <linearGradient id="si-sq" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%"  stopColor="#FDE68A" />
+        <stop offset="100%" stopColor="#B45309" />
+      </linearGradient>
+      <filter id="si-glow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
       </filter>
+      <clipPath id="si-left-clip">
+        <rect x="0" y="0" width="100" height="200" />
+      </clipPath>
+      <clipPath id="si-right-clip">
+        <rect x="100" y="0" width="100" height="200" />
+      </clipPath>
     </defs>
+
+    {/* Dark circle background */}
+    <circle cx="100" cy="100" r="98" fill="url(#si-bg)" />
+
+    {/* Subtle inner glow */}
+    <circle cx="100" cy="85" r="60" fill="#F59E0B" fillOpacity="0.05" />
+
+    {/* Outer ring: silver left half */}
+    <circle
+      cx="100" cy="100" r="72"
+      fill="none"
+      stroke="url(#si-silver)"
+      strokeWidth="14"
+      clipPath="url(#si-left-clip)"
+    />
+
+    {/* Outer ring: gold right half */}
+    <circle
+      cx="100" cy="100" r="72"
+      fill="none"
+      stroke="url(#si-gold)"
+      strokeWidth="14"
+      clipPath="url(#si-right-clip)"
+    />
+
+    {/* Inner thin accent ring */}
+    <circle
+      cx="100" cy="100" r="56"
+      fill="none"
+      stroke="#F59E0B"
+      strokeWidth="1.5"
+      strokeOpacity="0.3"
+    />
+
+    {/* Center gold square accent (like the original logo's square dot) */}
+    <rect
+      x="89" y="89" width="22" height="22"
+      rx="4"
+      fill="url(#si-sq)"
+      filter="url(#si-glow)"
+    />
+
+    {/* "S" letterform — bold, centered, gold */}
     <text
-      x="50%"
-      y="50"
+      x="100"
+      y="107"
       textAnchor="middle"
-      fontFamily="'Inter', 'Segoe UI', sans-serif"
-      fontWeight="900"
+      dominantBaseline="middle"
+      fontFamily="'Georgia', 'Times New Roman', serif"
+      fontWeight="700"
       fontSize="52"
-      letterSpacing="2"
-      fill="url(#sw-text-grad)"
-      filter="url(#sw-glow)"
+      fill="url(#si-letter)"
+      filter="url(#si-glow)"
     >
-      SPENDER
+      S
     </text>
   </svg>
 );
 
-/**
- * OnSysLogo — Horizontal layout: icon + ONSYS brand name + subtitle.
- * Used in navbars and sidebars.
- */
-export const OnSysLogo = ({ subtitle = "SPENDER", size = "md" }) => {
-  const iconSizes = { sm: "w-7 h-7", md: "w-9 h-9", lg: "w-12 h-12" };
-  const titleSizes = { sm: "text-base", md: "text-lg", lg: "text-2xl" };
-  const subtitleSizes = { sm: "text-[9px]", md: "text-[10px]", lg: "text-xs" };
+// OnSysIcon alias for backward-compat
+export const OnSysIcon = OnSysSpenderIcon;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// OnSysLogoFull — Full stacked logo for Login page
+// Mirrors Onsys Infotech layout exactly:
+//   [circle icon with S]
+//   ONSYS  (big bold gold serif)
+//   — SPENDER —  (gold divider)
+//   ENTERPRISE SOFTWARE • AI SOLUTIONS • CLOUD APPLICATIONS
+// ─────────────────────────────────────────────────────────────────────────────
+export const OnSysLogoFull = ({ className = '' }) => (
+  <div className={`flex flex-col items-center select-none ${className}`}>
+    {/* Icon with gold glow */}
+    <OnSysSpenderIcon className="w-24 h-24 drop-shadow-[0_0_28px_rgba(245,158,11,0.55)]" />
+
+    {/* ONSYS — big gold serif text */}
+    <div
+      className="text-4xl font-black tracking-[0.3em] uppercase mt-3 leading-none"
+      style={{
+        background: 'linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        fontFamily: "'Georgia', 'Times New Roman', serif",
+      }}
+    >
+      ONSYS
+    </div>
+
+    {/* — SPENDER — with divider lines */}
+    <div className="flex items-center gap-3 mt-2">
+      <div
+        className="h-px w-8"
+        style={{ background: 'linear-gradient(90deg, transparent, #D97706)' }}
+      />
+      <span
+        className="text-xs font-bold tracking-[0.4em] uppercase"
+        style={{
+          background: 'linear-gradient(135deg, #FDE68A 0%, #F59E0B 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+        }}
+      >
+        SPENDER
+      </span>
+      <div
+        className="h-px w-8"
+        style={{ background: 'linear-gradient(90deg, #D97706, transparent)' }}
+      />
+    </div>
+
+    {/* Tagline */}
+    <p className="text-[9px] text-slate-500 uppercase tracking-widest mt-2 text-center leading-relaxed">
+      ENTERPRISE SOFTWARE&nbsp;•&nbsp;AI SOLUTIONS
+      <br />
+      CLOUD APPLICATIONS
+    </p>
+  </div>
+);
+
+// ─────────────────────────────────────────────────────────────────────────────
+// OnSysLogo — Horizontal logo for nav/sidebar
+// ─────────────────────────────────────────────────────────────────────────────
+export const OnSysLogo = ({ subtitle = 'SPENDER', size = 'md' }) => {
+  const iconSizes     = { sm: 'w-7 h-7',    md: 'w-9 h-9',   lg: 'w-12 h-12' };
+  const titleSizes    = { sm: 'text-base',   md: 'text-lg',   lg: 'text-2xl'  };
+  const subtitleSizes = { sm: 'text-[9px]',  md: 'text-[10px]', lg: 'text-xs' };
 
   return (
-    <div className="flex items-center space-x-3">
-      <OnSysIcon className={iconSizes[size] || iconSizes.md} />
+    <div className="flex items-center space-x-3 select-none">
+      <OnSysSpenderIcon
+        className={`${iconSizes[size] || iconSizes.md} drop-shadow-[0_0_10px_rgba(245,158,11,0.4)]`}
+      />
       <div className="flex flex-col">
         <span
-          className={`font-extrabold tracking-wider text-white uppercase leading-none font-sans ${titleSizes[size] || titleSizes.md}`}
+          className={`font-black tracking-[0.22em] uppercase leading-none ${titleSizes[size] || titleSizes.md}`}
+          style={{
+            background: 'linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            fontFamily: "'Georgia', 'Times New Roman', serif",
+          }}
         >
           ONSYS
         </span>
         <span
-          className={`tracking-[0.25em] font-bold uppercase mt-0.5 leading-none ${subtitleSizes[size] || subtitleSizes.md}`}
-          style={{ background: "linear-gradient(90deg,#C77DFF,#7B2FFF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
+          className={`tracking-[0.3em] font-bold uppercase mt-0.5 leading-none ${subtitleSizes[size] || subtitleSizes.md}`}
+          style={{
+            background: 'linear-gradient(90deg, #FDE68A, #D97706)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
         >
           {subtitle}
         </span>
@@ -117,21 +211,28 @@ export const OnSysLogo = ({ subtitle = "SPENDER", size = "md" }) => {
   );
 };
 
-/**
- * OnSysLogoFull — Stacked layout: icon + big SPENDER wordmark + OnSys sub-label.
- * Ideal for login screens and splash pages.
- */
-export const OnSysLogoFull = ({ className = "" }) => (
-  <div className={`flex flex-col items-center gap-1 ${className}`}>
-    <OnSysIcon className="w-16 h-16 drop-shadow-[0_0_18px_rgba(155,93,229,0.7)]" />
-    <SpenderWordmark className="w-56 mt-1" />
-    <span
-      className="text-[10px] font-bold tracking-[0.35em] uppercase mt-0.5"
-      style={{ color: "#F59E0B" }}
+// SpenderWordmark kept for backward-compat
+export const SpenderWordmark = ({ className = '' }) => (
+  <svg viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <defs>
+      <linearGradient id="sw-gold" x1="0" y1="0" x2="320" y2="60" gradientUnits="userSpaceOnUse">
+        <stop offset="0%"   stopColor="#FDE68A" />
+        <stop offset="50%"  stopColor="#F59E0B" />
+        <stop offset="100%" stopColor="#D97706" />
+      </linearGradient>
+    </defs>
+    <text
+      x="50%" y="50"
+      textAnchor="middle"
+      fontFamily="'Georgia', 'Times New Roman', serif"
+      fontWeight="700"
+      fontSize="48"
+      letterSpacing="4"
+      fill="url(#sw-gold)"
     >
-      BY ONSYS INFOTECH
-    </span>
-  </div>
+      SPENDER
+    </text>
+  </svg>
 );
 
 export default OnSysLogo;
