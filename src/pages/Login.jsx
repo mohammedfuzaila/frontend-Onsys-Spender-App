@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { OnSysLogo, OnSysIcon } from '../components/OnSysLogo';
+import { OnSysLogoFull } from '../components/OnSysLogo';
 import { Eye, EyeOff, Loader2, ShieldCheck, Lock, User } from 'lucide-react';
 
 const Login = () => {
@@ -38,18 +38,8 @@ const Login = () => {
       <div className="w-full max-w-md p-6 sm:p-9 bg-[#11141C]/95 backdrop-blur-2xl border border-[#222938] rounded-3xl shadow-2xl z-10 fade-in">
         {/* OnSys Branded Header */}
         <div className="flex flex-col items-center text-center mb-8">
-          <div className="p-3 bg-[#181D28] rounded-2xl border border-[#2B3548] shadow-lg mb-3">
-            <OnSysIcon className="w-12 h-12" />
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="font-black text-2xl sm:text-3xl tracking-wider text-white uppercase font-sans">
-              ONSYS
-            </span>
-            <span className="text-xs font-bold text-amber-400 tracking-[0.3em] uppercase mt-0.5">
-              INFOTECH
-            </span>
-          </div>
-          <p className="text-slate-400 text-xs mt-2 font-medium">Spender &bull; Daily Expense Management</p>
+          <OnSysLogoFull />
+          <p className="text-slate-400 text-xs mt-3 font-medium">Daily Expense Management</p>
         </div>
 
         {error && (
