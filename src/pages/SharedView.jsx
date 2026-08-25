@@ -189,9 +189,8 @@ const SharedView = () => {
 
       {/* Edit/Add Modal for editors */}
       {isModalOpen && permission === 'EDIT' && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
-          <div className="bg-[#12151C] border border-[#232B3A] rounded-t-3xl sm:rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden bottom-sheet flex flex-col max-h-[90vh]">
-            <div className="w-12 h-1 bg-slate-700 rounded-full mx-auto mt-3 sm:hidden"></div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-5 bg-black/80 backdrop-blur-md">
+          <div className="bg-[#12151C] border border-[#232B3A] rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[85vh]">
 
             <div className="px-6 py-4 border-b border-[#1E2532] flex justify-between items-center flex-shrink-0">
               <h2 className="text-base font-bold text-white">{isEditMode ? 'Edit Expense' : 'Add Expense'}</h2>

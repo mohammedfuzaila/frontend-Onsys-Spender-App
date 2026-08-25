@@ -48,8 +48,8 @@ const BottomSheet = ({ isOpen, onClose, title, children, footer, maxWidth = 'max
         className="
           fixed inset-0
           flex items-center justify-center
+          p-4 sm:p-5
           pointer-events-none
-          p-5
         "
       >
         <div
@@ -62,7 +62,7 @@ const BottomSheet = ({ isOpen, onClose, title, children, footer, maxWidth = 'max
             shadow-2xl
             rounded-2xl
             flex flex-col
-            max-h-[90vh]
+            max-h-[85vh]
           `}
           onMouseDown={(e) => e.stopPropagation()}
         >

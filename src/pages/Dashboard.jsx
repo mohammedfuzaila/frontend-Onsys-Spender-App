@@ -451,10 +451,8 @@ const Dashboard = () => {
 
       {/* Add Funds Modal / Bottom Sheet */}
       {isFundModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
-          <div className="bg-[#12151C] border border-[#232B3A] rounded-t-3xl sm:rounded-3xl shadow-2xl w-full max-w-md overflow-hidden bottom-sheet">
-            {/* Drag handle for mobile */}
-            <div className="w-12 h-1 bg-slate-700 rounded-full mx-auto mt-3 sm:hidden"></div>
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 md:pt-32 px-4 sm:px-6 pb-20 bg-black/80 backdrop-blur-md">
+          <div className="bg-[#12151C] border border-[#232B3A] rounded-2xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col max-h-[85vh]">
 
             <div className="px-6 py-4 border-b border-[#1E2532] flex justify-between items-center">
               <div>
@@ -532,10 +530,8 @@ const Dashboard = () => {
 
       {/* Add Expense Modal / Bottom Sheet */}
       {isExpenseModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
-          <div className="bg-[#12151C] border border-[#232B3A] rounded-t-3xl sm:rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden bottom-sheet flex flex-col max-h-[90vh]">
-            {/* Drag handle for mobile */}
-            <div className="w-12 h-1 bg-slate-700 rounded-full mx-auto mt-3 sm:hidden"></div>
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 md:pt-32 px-4 sm:px-6 pb-20 bg-black/80 backdrop-blur-md">
+          <div className="bg-[#12151C] border border-[#232B3A] rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[85vh]">
 
             <div className="px-6 py-4 border-b border-[#1E2532] flex justify-between items-center flex-shrink-0">
               <div>
