@@ -1,14 +1,26 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import api from '../services/api';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(false); // No async check needed — always start at login
+  const [loading, setLoading] = useState(true); // true until we check localStorage
 
-  // Do NOT auto-login from localStorage — always show login page first (personal site)
-  // We intentionally skip the useEffect that read localStorage tokens
+  // On mount: check if we have valid tokens saved from a previous session.
+  // This keeps the user logged in across page refreshes without forcing re-login.
+  useEffect(() => {
+    const accessToken = localStorage.getItem('access_token');
+    const refreshToken = localStorage.getItem('refresh_token');
+
+    if (accessToken && refreshToken) {
+      // Tokens exist — treat the user as authenticated.
+      // The api.js interceptor will auto-refresh the access token if it has expired.
+      setIsAuthenticated(true);
+    }
+
+    setLoading(false);
+  }, []);
 
   const login = async (username, password) => {
     try {
@@ -37,3 +49,4 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
+

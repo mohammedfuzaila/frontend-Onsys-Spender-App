@@ -14,7 +14,21 @@ const Settings = lazy(() => import('../pages/Settings'));
 const SharedView = lazy(() => import('../pages/SharedView'));
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
+
+  // While tokens are being checked from localStorage, show a spinner.
+  // Without this, the app briefly redirects to /login on every page refresh.
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#090B0F]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-amber-500/30 border-t-amber-500 rounded-full animate-spin" />
+          <span className="text-xs text-slate-500 font-semibold tracking-widest uppercase">Loading…</span>
+        </div>
+      </div>
+    );
+  }
+
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
