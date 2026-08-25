@@ -49,7 +49,7 @@ const BottomSheet = ({ isOpen, onClose, title, children, footer, maxWidth = 'max
           fixed inset-0
           flex items-center justify-center
           pointer-events-none
-          p-4 sm:p-6
+          p-5
         "
       >
         <div
@@ -59,11 +59,10 @@ const BottomSheet = ({ isOpen, onClose, title, children, footer, maxWidth = 'max
             w-full ${maxWidth}
             bg-[#12151C]
             border border-[#252D3D]
-            shadow-[0_20px_80px_rgba(0,0,0,0.8)]
+            shadow-2xl
             rounded-2xl
             flex flex-col
-            max-h-[85vh]
-            animate-fade-in
+            max-h-[90vh]
           `}
           onMouseDown={(e) => e.stopPropagation()}
         >
