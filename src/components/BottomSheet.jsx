@@ -2,12 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 
 /**
- * BottomSheet — Native-feel mobile bottom sheet / desktop center modal.
- *
- * On mobile (< md): slides up from the bottom, sits above the bottom nav bar,
- * has a drag handle, and dismisses on backdrop tap.
- * On desktop (md+): centered modal with blur backdrop.
- *
+ * Modal (formerly BottomSheet) — Centered modal across all devices.
+ * 
  * Props:
  *  isOpen    — boolean: whether the sheet is visible
  *  onClose   — function: called when user dismisses
@@ -48,17 +44,12 @@ const BottomSheet = ({ isOpen, onClose, title, children, footer, maxWidth = 'max
       aria-modal="true"
       role="dialog"
     >
-      {/*
-        Mobile: anchored to bottom, above safe area.
-        Desktop: centered.
-      */}
       <div
         className="
-          absolute inset-x-0 bottom-0
-          md:relative md:inset-auto
-          md:flex md:items-center md:justify-center
-          md:min-h-full
+          fixed inset-0
+          flex items-center justify-center
           pointer-events-none
+          p-4 sm:p-6
         "
       >
         <div
@@ -68,40 +59,16 @@ const BottomSheet = ({ isOpen, onClose, title, children, footer, maxWidth = 'max
             w-full ${maxWidth}
             bg-[#12151C]
             border border-[#252D3D]
-            shadow-[0_-8px_60px_rgba(0,0,0,0.7)]
-            md:shadow-[0_20px_80px_rgba(0,0,0,0.8)]
-
-            /* Mobile: rounded top corners, full width, slide up */
-            rounded-t-3xl
-            md:rounded-2xl
-
-            /* Flex column so footer always sticks at bottom */
+            shadow-[0_20px_80px_rgba(0,0,0,0.8)]
+            rounded-2xl
             flex flex-col
-
-            /* Height constraints */
-            max-h-[88vh]
-            md:max-h-[85vh]
-
-            /* Bottom safe area for iPhone home bar */
-            pb-safe
-
-            /* Slide-up animation on mobile */
-            animate-slide-up
-            md:animate-fade-in
+            max-h-[85vh]
+            animate-fade-in
           `}
-          style={{
-            /* On mobile, keep 16px gap from bottom nav (56px) + safe area */
-            marginBottom: 'env(safe-area-inset-bottom, 0px)',
-          }}
           onMouseDown={(e) => e.stopPropagation()}
         >
-          {/* Drag handle — mobile only */}
-          <div className="flex justify-center pt-3 pb-1 md:hidden flex-shrink-0">
-            <div className="w-10 h-1 rounded-full bg-slate-600" />
-          </div>
-
           {/* Header */}
-          <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#1E2532] flex-shrink-0">
+          <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#1E2532] flex-shrink-0 rounded-t-2xl">
             <h2 className="text-sm font-bold text-white tracking-tight">{title}</h2>
             <button
               onClick={onClose}
@@ -119,7 +86,7 @@ const BottomSheet = ({ isOpen, onClose, title, children, footer, maxWidth = 'max
 
           {/* Footer — sticky at bottom */}
           {footer && (
-            <div className="flex-shrink-0 px-5 py-3.5 border-t border-[#1E2532] bg-[#0E1117]/80 flex items-center justify-end gap-2.5">
+            <div className="flex-shrink-0 px-5 py-3.5 border-t border-[#1E2532] bg-[#0E1117]/80 flex items-center justify-end gap-2.5 rounded-b-2xl">
               {footer}
             </div>
           )}
