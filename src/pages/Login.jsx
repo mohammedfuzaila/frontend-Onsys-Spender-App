@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { OnSysLogoFull } from '../components/OnSysLogo';
 import { Eye, EyeOff, Loader2, ShieldCheck, Lock, User } from 'lucide-react';
-import { wakeupBackend } from '../utils/wakeup';
+import { subscribeWakeupStatus, triggerImmediateCheck } from '../utils/wakeup';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -11,31 +11,23 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [serverStatus, setServerStatus] = useState('waking'); // 'waking' | 'ready' | 'slow'
+  const [serverStatus, setServerStatus] = useState('waking'); // 'waking' | 'ready' | 'slow' | 'failed'
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  // Kick off backend wakeup the moment the login screen appears.
-  // Render free-tier cold starts take ~30-60 s; firing this early gives
-  // maximum lead time before the user presses Sign In.
+  // Subscribe to the global high-speed wakeup manager
   useEffect(() => {
-    let cancelled = false;
-    setServerStatus('waking');
-
-    wakeupBackend().then(() => {
-      if (!cancelled) setServerStatus('ready');
+    const unsubscribe = subscribeWakeupStatus((status) => {
+      setServerStatus(status);
     });
-
-    // After 15 s show a friendlier "still warming up" hint
-    const slowTimer = setTimeout(() => {
-      if (!cancelled) setServerStatus((prev) => (prev === 'waking' ? 'slow' : prev));
-    }, 15000);
-
-    return () => {
-      cancelled = true;
-      clearTimeout(slowTimer);
-    };
+    return unsubscribe;
   }, []);
+
+  const handleInteraction = () => {
+    if (serverStatus !== 'ready') {
+      triggerImmediateCheck();
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,9 +45,10 @@ const Login = () => {
   };
 
   const statusConfig = {
+    ready:  { dot: 'bg-emerald-400',              text: 'Server ready',                 cls: 'text-emerald-400'   },
     waking: { dot: 'bg-amber-400 animate-pulse', text: 'Connecting to server…',        cls: 'text-amber-400/80' },
     slow:   { dot: 'bg-amber-500 animate-pulse', text: 'Server warming up, please wait…', cls: 'text-amber-500/90' },
-    ready:  { dot: 'bg-emerald-400',              text: 'Server ready',                 cls: 'text-emerald-400'   },
+    failed: { dot: 'bg-rose-400',                 text: 'Connection slow — click to retry', cls: 'text-rose-400 hover:text-rose-300 cursor-pointer' },
   };
   const s = statusConfig[serverStatus] ?? statusConfig.waking;
 
@@ -74,7 +67,11 @@ const Login = () => {
         </div>
 
         {/* Server status pill */}
-        <div className="mb-5 flex items-center justify-center gap-2">
+        <div 
+          onClick={handleInteraction}
+          title="Click to refresh connection"
+          className="mb-5 flex items-center justify-center gap-2 cursor-pointer transition-opacity hover:opacity-80"
+        >
           <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${s.dot}`} />
           <span className={`text-[10px] font-semibold tracking-widest uppercase ${s.cls}`}>
             {s.text}
@@ -97,6 +94,7 @@ const Login = () => {
               <input
                 type="text"
                 required
+                onFocus={handleInteraction}
                 className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#262D3B] focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all bg-[#171C26] text-white placeholder-slate-500 text-xs sm:text-sm font-medium"
                 placeholder="Enter username"
                 value={username}
@@ -112,6 +110,7 @@ const Login = () => {
               <input
                 type={showPassword ? 'text' : 'password'}
                 required
+                onFocus={handleInteraction}
                 className="w-full pl-10 pr-11 py-3 rounded-xl border border-[#262D3B] focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all bg-[#171C26] text-white placeholder-slate-500 text-xs sm:text-sm font-medium"
                 placeholder="Enter password"
                 value={password}

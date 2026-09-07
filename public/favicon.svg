@@ -1,60 +1,99 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" fill="none">
   <defs>
-    <!-- Deep dark background -->
-    <linearGradient id="bg-grad" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#0F0A1E"/>
-      <stop offset="100%" stop-color="#160B2E"/>
+    <!-- Background radial gradient -->
+    <radialGradient id="fav-bg" cx="50%" cy="38%" r="65%">
+      <stop offset="0%" stop-color="#1E222D" />
+      <stop offset="60%" stop-color="#11141B" />
+      <stop offset="100%" stop-color="#080A0E" />
+    </radialGradient>
+
+    <!-- Silver metallic gradient for left half of ring -->
+    <linearGradient id="fav-silver" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="25%" stop-color="#E2E8F0" />
+      <stop offset="60%" stop-color="#94A3B8" />
+      <stop offset="100%" stop-color="#64748B" />
     </linearGradient>
-    <!-- Vivid purple bolt gradient -->
-    <linearGradient id="bolt-grad" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#C77DFF"/>
-      <stop offset="40%" stop-color="#9B5DE5"/>
-      <stop offset="100%" stop-color="#5A0FA0"/>
+
+    <!-- Gold metallic gradient for right half of ring -->
+    <linearGradient id="fav-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FDE68A" />
+      <stop offset="30%" stop-color="#F59E0B" />
+      <stop offset="70%" stop-color="#D97706" />
+      <stop offset="100%" stop-color="#92400E" />
     </linearGradient>
-    <!-- Inner gloss on bolt -->
-    <linearGradient id="bolt-gloss" x1="40" y1="20" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+
+    <!-- Gold gradient for center S -->
+    <linearGradient id="fav-letter" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFBEB" />
+      <stop offset="20%" stop-color="#FDE68A" />
+      <stop offset="60%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
     </linearGradient>
-    <!-- Glow filter -->
-    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+
+    <!-- Ambient center glow -->
+    <radialGradient id="fav-center-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.5" />
+      <stop offset="40%" stop-color="#D97706" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#D97706" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Glow filter for S -->
+    <filter id="fav-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="blur" />
       <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
-    <!-- Soft drop shadow for text -->
-    <filter id="text-shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#7B2FFF" flood-opacity="0.7"/>
-    </filter>
-    <!-- Circular clip -->
-    <clipPath id="circle-clip">
-      <circle cx="100" cy="100" r="96"/>
+
+    <!-- Clip paths for left and right half of outer ring -->
+    <clipPath id="fav-left-clip">
+      <rect x="0" y="0" width="100" height="200" />
+    </clipPath>
+    <clipPath id="fav-right-clip">
+      <rect x="100" y="0" width="100" height="200" />
     </clipPath>
   </defs>
 
-  <!-- Background circle -->
-  <circle cx="100" cy="100" r="98" fill="url(#bg-grad)" stroke="#3A1570" stroke-width="1.5"/>
+  <!-- Dark circular background -->
+  <circle cx="100" cy="100" r="98" fill="url(#fav-bg)" />
 
-  <!-- Subtle radial glow behind bolt -->
-  <radialGradient id="center-glow" cx="50%" cy="45%" r="40%">
-    <stop offset="0%" stop-color="#7B2FFF" stop-opacity="0.4"/>
-    <stop offset="100%" stop-color="#7B2FFF" stop-opacity="0"/>
-  </radialGradient>
-  <circle cx="100" cy="88" r="55" fill="url(#center-glow)" clip-path="url(#circle-clip)"/>
+  <!-- Outer split ring: left half Silver -->
+  <circle
+    cx="100" cy="100" r="72"
+    fill="none"
+    stroke="url(#fav-silver)"
+    stroke-width="14"
+    clip-path="url(#fav-left-clip)"
+  />
 
-  <!-- Lightning bolt — scaled and centered -->
-  <g filter="url(#glow)" clip-path="url(#circle-clip)">
-    <!-- Main bolt shape -->
+  <!-- Outer split ring: right half Gold -->
+  <circle
+    cx="100" cy="100" r="72"
+    fill="none"
+    stroke="url(#fav-gold)"
+    stroke-width="14"
+    clip-path="url(#fav-right-clip)"
+  />
+
+  <!-- Inner thin accent ring -->
+  <circle
+    cx="100" cy="100" r="56"
+    fill="none"
+    stroke="#F59E0B"
+    stroke-width="1.5"
+    stroke-opacity="0.35"
+  />
+
+  <!-- Ambient warm gold radial glow behind S -->
+  <circle cx="100" cy="100" r="42" fill="url(#fav-center-glow)" />
+
+  <!-- Central serif S path with warm gold glow -->
+  <g filter="url(#fav-glow)">
     <path
-      d="M113 22 L60 98 L90 98 L87 178 L140 102 L110 102 Z"
-      fill="url(#bolt-grad)"
-    />
-    <!-- Glossy sheen on bolt -->
-    <path
-      d="M113 22 L60 98 L90 98 L87 178 L140 102 L110 102 Z"
-      fill="url(#bolt-gloss)"
+      d="M 100.14 118.98 Q 96.84 118.98 93.98 118.17 Q 91.13 117.35 89.14 116.23 L 87.39 118.01 L 85.24 118.01 L 84.90 104.99 L 87.09 104.99 Q 87.82 106.84 88.97 108.90 Q 90.11 110.95 91.61 112.58 Q 93.16 114.28 95.08 115.35 Q 96.99 116.41 99.55 116.41 Q 103.01 116.41 104.84 114.72 Q 106.69 113.03 106.69 110.47 Q 106.69 108.36 105.13 106.93 Q 103.57 105.49 100.29 104.45 Q 98.16 103.77 96.37 103.19 Q 94.58 102.60 93.00 101.99 Q 89.37 100.54 87.61 97.85 Q 85.85 95.16 85.85 91.83 Q 85.85 89.73 86.76 87.79 Q 87.67 85.85 89.42 84.29 Q 91.10 82.85 93.71 81.94 Q 96.33 81.02 99.40 81.02 Q 102.40 81.02 105.01 81.85 Q 107.63 82.67 109.12 83.51 L 110.68 81.99 L 112.89 81.99 L 113.09 94.27 L 110.90 94.27 Q 110.14 92.29 109.11 90.23 Q 108.08 88.15 106.95 86.78 Q 105.70 85.31 104.07 84.43 Q 102.45 83.55 100.27 83.55 Q 97.52 83.55 95.78 85.11 Q 94.04 86.66 94.04 88.94 Q 94.04 91.09 95.56 92.47 Q 97.07 93.84 100.27 94.88 Q 102.14 95.52 104.09 96.15 Q 106.05 96.78 107.58 97.37 Q 111.26 98.79 113.18 101.29 Q 115.10 103.79 115.10 107.50 Q 115.10 109.84 114.00 112.03 Q 112.91 114.20 111.06 115.65 Q 109.03 117.25 106.36 118.11 Q 103.70 118.98 100.14 118.98 Z"
+      fill="url(#fav-letter)"
     />
   </g>
 </svg>

@@ -13,38 +13,54 @@ export const OnSysSpenderIcon = ({ className = 'w-16 h-16' }) => (
     className={className}
   >
     <defs>
-      <radialGradient id="si-bg" cx="50%" cy="35%" r="65%">
-        <stop offset="0%" stopColor="#1C1C22" />
-        <stop offset="100%" stopColor="#0D0D0F" />
+      {/* Deep circular background */}
+      <radialGradient id="si-bg" cx="50%" cy="38%" r="65%">
+        <stop offset="0%" stopColor="#1E222D" />
+        <stop offset="60%" stopColor="#11141B" />
+        <stop offset="100%" stopColor="#080A0E" />
       </radialGradient>
-      <linearGradient id="si-silver" x1="0" y1="0" x2="1" y2="1">
+
+      {/* Silver metallic gradient for left half of ring */}
+      <linearGradient id="si-silver" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%"  stopColor="#FFFFFF" />
-        <stop offset="30%" stopColor="#D4D8E2" />
-        <stop offset="60%" stopColor="#9BA3B2" />
-        <stop offset="100%" stopColor="#6B7280" />
+        <stop offset="25%" stopColor="#E2E8F0" />
+        <stop offset="60%" stopColor="#94A3B8" />
+        <stop offset="100%" stopColor="#64748B" />
       </linearGradient>
-      <linearGradient id="si-gold" x1="1" y1="0" x2="0" y2="1">
+
+      {/* Gold metallic gradient for right half of ring */}
+      <linearGradient id="si-gold" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%"  stopColor="#FDE68A" />
-        <stop offset="35%" stopColor="#F59E0B" />
+        <stop offset="30%" stopColor="#F59E0B" />
         <stop offset="70%" stopColor="#D97706" />
         <stop offset="100%" stopColor="#92400E" />
       </linearGradient>
+
+      {/* Gold gradient for center S */}
       <linearGradient id="si-letter" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"  stopColor="#FDE68A" />
-        <stop offset="50%" stopColor="#F59E0B" />
+        <stop offset="0%"  stopColor="#FFFBEB" />
+        <stop offset="20%" stopColor="#FDE68A" />
+        <stop offset="60%" stopColor="#F59E0B" />
         <stop offset="100%" stopColor="#D97706" />
       </linearGradient>
-      <linearGradient id="si-sq" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%"  stopColor="#FDE68A" />
-        <stop offset="100%" stopColor="#B45309" />
-      </linearGradient>
-      <filter id="si-glow" x="-20%" y="-20%" width="140%" height="140%">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+
+      {/* Ambient center gold glow */}
+      <radialGradient id="si-center-glow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.5" />
+        <stop offset="40%" stopColor="#D97706" stopOpacity="0.22" />
+        <stop offset="100%" stopColor="#D97706" stopOpacity="0" />
+      </radialGradient>
+
+      {/* Soft warm glow filter */}
+      <filter id="si-glow" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="blur" />
         <feMerge>
           <feMergeNode in="blur" />
           <feMergeNode in="SourceGraphic" />
         </feMerge>
       </filter>
+
+      {/* Clean vertical clip paths for split ring */}
       <clipPath id="si-left-clip">
         <rect x="0" y="0" width="100" height="200" />
       </clipPath>
@@ -55,9 +71,6 @@ export const OnSysSpenderIcon = ({ className = 'w-16 h-16' }) => (
 
     {/* Dark circle background */}
     <circle cx="100" cy="100" r="98" fill="url(#si-bg)" />
-
-    {/* Subtle inner glow */}
-    <circle cx="100" cy="85" r="60" fill="#F59E0B" fillOpacity="0.05" />
 
     {/* Outer ring: silver left half */}
     <circle
@@ -83,31 +96,19 @@ export const OnSysSpenderIcon = ({ className = 'w-16 h-16' }) => (
       fill="none"
       stroke="#F59E0B"
       strokeWidth="1.5"
-      strokeOpacity="0.3"
+      strokeOpacity="0.35"
     />
 
-    {/* Center gold square accent (like the original logo's square dot) */}
-    <rect
-      x="89" y="89" width="22" height="22"
-      rx="4"
-      fill="url(#si-sq)"
-      filter="url(#si-glow)"
-    />
+    {/* Ambient warm gold radial glow behind S */}
+    <circle cx="100" cy="100" r="42" fill="url(#si-center-glow)" />
 
-    {/* "S" letterform — bold, centered, gold */}
-    <text
-      x="100"
-      y="107"
-      textAnchor="middle"
-      dominantBaseline="middle"
-      fontFamily="'Georgia', 'Times New Roman', serif"
-      fontWeight="700"
-      fontSize="52"
-      fill="url(#si-letter)"
-      filter="url(#si-glow)"
-    >
-      S
-    </text>
+    {/* "S" letterform — bold, centered, gold serif */}
+    <g filter="url(#si-glow)">
+      <path
+        d="M 100.14 118.98 Q 96.84 118.98 93.98 118.17 Q 91.13 117.35 89.14 116.23 L 87.39 118.01 L 85.24 118.01 L 84.90 104.99 L 87.09 104.99 Q 87.82 106.84 88.97 108.90 Q 90.11 110.95 91.61 112.58 Q 93.16 114.28 95.08 115.35 Q 96.99 116.41 99.55 116.41 Q 103.01 116.41 104.84 114.72 Q 106.69 113.03 106.69 110.47 Q 106.69 108.36 105.13 106.93 Q 103.57 105.49 100.29 104.45 Q 98.16 103.77 96.37 103.19 Q 94.58 102.60 93.00 101.99 Q 89.37 100.54 87.61 97.85 Q 85.85 95.16 85.85 91.83 Q 85.85 89.73 86.76 87.79 Q 87.67 85.85 89.42 84.29 Q 91.10 82.85 93.71 81.94 Q 96.33 81.02 99.40 81.02 Q 102.40 81.02 105.01 81.85 Q 107.63 82.67 109.12 83.51 L 110.68 81.99 L 112.89 81.99 L 113.09 94.27 L 110.90 94.27 Q 110.14 92.29 109.11 90.23 Q 108.08 88.15 106.95 86.78 Q 105.70 85.31 104.07 84.43 Q 102.45 83.55 100.27 83.55 Q 97.52 83.55 95.78 85.11 Q 94.04 86.66 94.04 88.94 Q 94.04 91.09 95.56 92.47 Q 97.07 93.84 100.27 94.88 Q 102.14 95.52 104.09 96.15 Q 106.05 96.78 107.58 97.37 Q 111.26 98.79 113.18 101.29 Q 115.10 103.79 115.10 107.50 Q 115.10 109.84 114.00 112.03 Q 112.91 114.20 111.06 115.65 Q 109.03 117.25 106.36 118.11 Q 103.70 118.98 100.14 118.98 Z"
+        fill="url(#si-letter)"
+      />
+    </g>
   </svg>
 );
 
