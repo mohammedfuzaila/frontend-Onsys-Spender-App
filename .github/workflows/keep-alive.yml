@@ -1,0 +1,50 @@
+name: Keep Backend Warm & Active
+
+on:
+  schedule:
+    # Run every 10 minutes to prevent Render free-tier spin-down (15 min inactivity timeout)
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  ping-backend:
+    name: Ping OnSys Spender Backend
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Ping Backend Health Endpoint
+        run: |
+          BACKEND_URL="${{ secrets.BACKEND_URL || 'https://backend-onsys-spender-app.onrender.com' }}"
+          # Strip trailing slash if present
+          BACKEND_URL="${BACKEND_URL%/}"
+          HEALTH_URL="$BACKEND_URL/api/health/"
+
+          echo "Pinging: $HEALTH_URL at $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+
+          MAX_RETRIES=8
+          RETRY_DELAY=6
+
+          for attempt in $(seq 1 $MAX_RETRIES); do
+            echo "Attempt $attempt of $MAX_RETRIES..."
+            
+            # Fetch HTTP status code and response body with a 15-second timeout
+            HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" --max-time 15 "$HEALTH_URL" || echo "000")
+            
+            echo "HTTP Status: $HTTP_CODE"
+            if [ -f /tmp/response.json ]; then
+              cat /tmp/response.json
+              echo ""
+            fi
+
+            if [ "$HTTP_CODE" -eq 200 ]; then
+              echo "✅ Backend is active, healthy, and warm!"
+              exit 0
+            fi
+
+            echo "⚠️ Backend not ready yet (status $HTTP_CODE). Cold start may be in progress. Retrying in ${RETRY_DELAY}s..."
+            sleep $RETRY_DELAY
+          done
+
+          echo "❌ Backend did not respond with 200 after $MAX_RETRIES attempts."
+          exit 1
